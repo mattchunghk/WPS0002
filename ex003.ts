@@ -8,16 +8,34 @@ class GovAgent {
       console.log(`I, ${this.name}, serve for ${this.country}`)
     }
     realVow() {
-      console.log(`I am really ${this.name}, truely serve for ${this.country}`)
+      console.log(`I am really ${this.name}, truly serve for ${this.country}`)
     }
   }
   
   // modify this function to make realVow() work as expected`
-  function createSpy(options:any,) {
+  function createSpy(options:any) {
 
-    let fakeAgent = new GovAgent(options.fake.country, options.fake.name).realVow.bind(options.real.country, options.real.name)
+    class FakeAgent extends GovAgent{
+        
+        // realVow(){
+        //     console.log(`I am really ${options.real.name}, truly serve for ${options.real.country}`)
+        // }
+
+        realVow(){
+            this.realVow.bind(console.log(`I am really ${options.real.name}, truly serve for ${options.real.country}`))
+        }
+    }
+
+
+    let fakeAgent = new FakeAgent(options.fake.country, options.fake.name)
+    
     return fakeAgent
+
   }
+
+  
+
+  
 
 
 
@@ -30,34 +48,16 @@ class GovAgent {
     real: { country: '西國', name: '黃昏' },
   })
 
-
-  console.log(洛伊德)
   
   console.log('==============================')
   
   約兒.vow() // print: I, Alice, serve for 東國
-  約兒.realVow() // print: I am really Alice, truely serve for 東國
+  約兒.realVow() // print: I am really Alice, truly serve for 東國
   
   console.log('==============================')
 
   洛伊德.vow() // I, Frank, serve for 東國
-  洛伊德.realVow() // I am really Eve, truely serve for 西國
+  洛伊德.realVow() // I am really Eve, truly serve for 西國
 
   
   console.log('==============================')
-
-
-  class Adder {
-    constructor(public a: string) { }
-
-    add(b: string): string {
-        return this.a + b;
-    }
-}
-
-function useAdd(add: (x: number) => number) {
-    return add(456);
-}
-
-let adder = new Adder('mary had a little 🐑');
-console.log(useAdd(adder.add.bind(adder))); // No compile error!

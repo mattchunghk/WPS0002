@@ -116,12 +116,24 @@ interface Attack{
 }
 
 class Amazon extends createPlayer{  
+    constructor(name: string){
+        super(name,new BowAndArrow(30).damage,new ThrowingSpear(40).damage);
+        // TODO: set the default value of usePrimaryAttack
+     }
 }
 
 class Paladin extends createPlayer{  
+    constructor(name: string){
+        super(name,new Swords(50).damage,new Spells(25).damage);
+        // TODO: set the default value of usePrimaryAttack
+     }
 }
 
 class Barbarian extends createPlayer{  
+    constructor(name: string){
+        super(name,new Swords(55).damage,new ThrowingSpear(30).damage);
+        // TODO: set the default value of usePrimaryAttack
+     }
 }
 
 
@@ -148,9 +160,9 @@ class Monster{
 // const amazon = new Amazon(30, 40 ,false, 0);
 const monster = new Monster();
 
-const amazon = new Amazon("Amazon",new BowAndArrow(30).damage,new ThrowingSpear(40).damage)
-const paladin = new Amazon("Paladin",new Swords(50).damage,new Spells(25).damage)
-const barbarian = new Barbarian("Barbarian",new Swords(55).damage,new ThrowingSpear(30).damage)
+const amazon = new Amazon("Amazon")
+const paladin = new Paladin("Paladin")
+const barbarian = new Barbarian("Barbarian")
 
 
 amazon.attack(monster);
