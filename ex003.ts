@@ -16,11 +16,9 @@ class GovAgent {
   function createSpy(options:any) {
 
     class FakeAgent extends GovAgent{
-        
         // realVow(){
         //     console.log(`I am really ${options.real.name}, truly serve for ${options.real.country}`)
         // }
-
         realVow(){
             this.realVow.bind(console.log(`I am really ${options.real.name}, truly serve for ${options.real.country}`))
         }
