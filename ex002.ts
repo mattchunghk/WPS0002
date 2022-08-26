@@ -1,167 +1,28 @@
 
 
-// interface Attack{
-//     damage:number
-    
-//  }
- 
-//  class BowAndArrow implements Attack{
-//       damage:number;
-//       constructor(damage:number){
-//         this.damage = damage;
-//       }
-//  }
- 
-//  class ThrowingSpear implements Attack{
-//     damage:number;
-//     constructor(damage:number){
-//       this.damage = damage;
-//     }
-//  }
- 
- 
-//  interface Player{
-//      attack(monster:Monster): void;
-//      switchAttack(): void;
-//      gainExperience(exp:number): void;
-//  }
-
- 
-//  class Amazon implements Player{
-//      private primary: Attack['damage'];
-//      private secondary: Attack['damage'];
-//      private usePrimaryAttack: boolean;
-//      private exp:number;
-//      constructor(){
-//  
-//          this.primary = new BowAndArrow(30).damage;
-//           this.secondary = new ThrowingSpear(40).damage;
-//             this.usePrimaryAttack = true;
-//             this.exp = 0
-
-//          // TODO: set the default value of usePrimaryAttack
-//       }
-      
-//       attack(monster:Monster){
-//         let random:number = (Math.floor(Math.random() * 2)+1)
-
-//         if(monster.hp <= 0){
-//             monster.hp = 0
-//             console.log("Monster Died")
-//         }else{
-//             if (random == 2){
-//                 if (this.usePrimaryAttack){
-//                     monster.hp -= this.primary * 2
-//                     this.gainExperience(this.primary * 2) 
-//                     console.log(`Player Amazon primary attacks a monster (HP:${monster.hp}) [CRITICAL]`)
-
-//                 }else{
-//                     monster.hp -= this.secondary * 2
-//                     this.gainExperience(this.secondary * 2) 
-//                     console.log(`Player Amazon secondary attacks a monster (HP:${monster.hp}) [CRITICAL]`)
-//                 }
-//                 console.log(`Player Amazon player total experience ${this.exp}`)
-
-
-//             }else {
-//                 if (this.usePrimaryAttack){
-//                     monster.hp -= this.primary
-//                     this.gainExperience(this.primary) 
-//                     console.log(`Player Amazon primary attacks a monster (HP:${monster.hp})`)
-//                 }else{
-//                     monster.hp -= this.secondary
-//                     this.gainExperience(this.secondary) 
-//                     console.log(`Player Amazon secondary attacks a monster (HP:${monster.hp})`)
-//                 }
-//                 console.log(`Player Amazon player total experience ${this.exp}`)
-//             }
-//         }
-
-//         console.log("")
-
-//     }
-
-      
-//       switchAttack(){
-//           // TODO: Change the attack mode for this player
-//           if(this.usePrimaryAttack){
-//             this.usePrimaryAttack = false
-//           }else{
-//             this.usePrimaryAttack = true
-//           }
-          
-//           if (this.usePrimaryAttack){
-//             return true;
-//           }else{
-//             return false;
-//           }
-//       }
-
-//       gainExperience(exp:number){
-//         this.exp += exp
-//     }
- 
-//       //.. The remaining methods.
-//  }
-
-//  class Monster{
-//     // Think of how to write injure
-//     public hp:number;
-//     constructor(hp:number){
-//             this.hp = hp;
-        
-//     }
-
-// }
-
-// // const amazon = new Amazon(30, 40 ,false, 0);
-// const monster2 = new Monster(300);
-
-// const player2 = new Amazon()
-
-// player2.attack(monster2);
-// player2.switchAttack()
-// player2.attack(monster2);
-// player2.attack(monster2);
-// player2.attack(monster2);
-// player2.switchAttack()
-// player2.attack(monster2);
-// player2.attack(monster2);
-// player2.attack(monster2);
-
-
 
 interface Attack{
     damage:number
     
  }
- 
- class BowAndArrow implements Attack{
-      damage:number;
-      constructor(damage:number){
-        this.damage = damage;
-      }
- }
- 
- class ThrowingSpear implements Attack{
+
+ class createAttack implements Attack{
     damage:number;
     constructor(damage:number){
       this.damage = damage;
     }
+ }
+ 
+ class BowAndArrow extends createAttack implements Attack{
+ }
+ 
+ class ThrowingSpear extends createAttack implements Attack{
  }
 
- class Swords implements Attack{
-    damage:number;
-    constructor(damage:number){
-      this.damage = damage;
-    }
+ class Swords extends createAttack implements Attack{
  }
 
- class Spells implements Attack{
-    damage:number;
-    constructor(damage:number){
-      this.damage = damage;
-    }
+ class Spells extends createAttack implements Attack{
  }
 
  interface Player{
@@ -170,14 +31,19 @@ interface Attack{
      gainExperience(exp:number): void;
  }
 
- class Amazon implements Player{
+
+ class createPlayer implements Player{
+    protected name: string;
     protected primary: Attack['damage'];
     protected secondary: Attack['damage'];
     protected usePrimaryAttack: boolean = true;
     protected exp:number;
-    constructor(){
-        this.primary = new BowAndArrow(30).damage;
-        this.secondary = new ThrowingSpear(40).damage;
+    constructor(name: string,primary:Attack['damage'],secondary:Attack['damage']){
+        // this.primary = new BowAndArrow(30).damage;
+        // this.secondary = new ThrowingSpear(40).damage;
+        this.name = name;
+        this.primary = primary;
+        this.secondary = secondary;
         this.usePrimaryAttack = true;
         this.exp = 0
         // TODO: set the default value of usePrimaryAttack
@@ -185,37 +51,52 @@ interface Attack{
      
      attack(monster:Monster){
        let random:number = (Math.floor(Math.random() * 2)+1)
-       if(monster.hp <= 0){
-           monster.hp = 0
-           console.log("Monster Died")
-       }else{
+
+       if(monster.hp < 0){
+        console.log(`Monster is died`)
+        }else{
+
+       
+    
+
            if (random == 2){
                if (this.usePrimaryAttack){
                    monster.hp -= this.primary * 2
                    this.gainExperience(this.primary * 2) 
-                   console.log(`Player Amazon primary attacks a monster (HP:${monster.hp}) [CRITICAL]`)
+                   console.log(`Player ${this.name} primary attacks a monster (HP:${monster.hp}) [CRITICAL]`)
                }else{
                    monster.hp -= this.secondary * 2
                    this.gainExperience(this.secondary * 2) 
-                   console.log(`Player Amazon secondary attacks a monster (HP:${monster.hp}) [CRITICAL]`)
+                   console.log(`Player ${this.name} secondary attacks a monster (HP:${monster.hp}) [CRITICAL]`)
                }
-               console.log(`Player Amazon player total experience ${this.exp}`)
+               console.log(`Player ${this.name} player total experience ${this.exp}`)
 
 
            }else {
                if (this.usePrimaryAttack){
                    monster.hp -= this.primary
                    this.gainExperience(this.primary) 
-                   console.log(`Player Amazon primary attacks a monster (HP:${monster.hp})`)
+                   console.log(`Player ${this.name} primary attacks a monster (HP:${monster.hp})`)
                }else{
                    monster.hp -= this.secondary
                    this.gainExperience(this.secondary) 
-                   console.log(`Player Amazon secondary attacks a monster (HP:${monster.hp})`)
+                   console.log(`Player ${this.name} secondary attacks a monster (HP:${monster.hp})`)
                }
-               console.log(`Player Amazon player total experience ${this.exp}`)
+               console.log(`Player ${this.name} player total experience ${this.exp}`)
            }
-       }
-       console.log("")
+       
+       if(monster.checkMonsterInjure(monster.hp)){
+        console.log(`Monster is injure`)
+        }
+        console.log("")
+
+    }
+
+   
+    //     else {
+    //     this.attack(monster);
+    //  }  
+
    }
      
      switchAttack(){
@@ -234,77 +115,57 @@ interface Attack{
      //.. The remaining methods.
 }
 
-class Paladin extends Amazon implements Player{
-    protected primary: Attack['damage'];
-    protected secondary: Attack['damage'];
-    protected usePrimaryAttack: boolean = true;
-    protected exp:number;
+class Amazon extends createPlayer{  
+}
 
-    attack(monster:Monster){
-        let random:number = (Math.floor(Math.random() * 2)+1)
-        if(monster.hp <= 0){
-            monster.hp = 0
-            console.log("Monster Died")
-        }else{
-            if (random == 2){
-                if (this.usePrimaryAttack){
-                    monster.hp -= this.primary * 2
-                    this.gainExperience(this.primary * 2) 
-                    console.log(`Player Amazon primary attacks a monster (HP:${monster.hp}) [CRITICAL]`)
-                }else{
-                    monster.hp -= this.secondary * 2
-                    this.gainExperience(this.secondary * 2) 
-                    console.log(`Player Amazon secondary attacks a monster (HP:${monster.hp}) [CRITICAL]`)
-                }
-                console.log(`Player Amazon player total experience ${this.exp}`)
- 
- 
-            }else {
-                if (this.usePrimaryAttack){
-                    monster.hp -= this.primary
-                    this.gainExperience(this.primary) 
-                    console.log(`Player Amazon primary attacks a monster (HP:${monster.hp})`)
-                }else{
-                    monster.hp -= this.secondary
-                    this.gainExperience(this.secondary) 
-                    console.log(`Player Amazon secondary attacks a monster (HP:${monster.hp})`)
-                }
-                console.log(`Player Amazon player total experience ${this.exp}`)
-            }
-        }
-        console.log("")
-    }
+class Paladin extends createPlayer{  
+}
 
-
+class Barbarian extends createPlayer{  
 }
 
 
- 
-
- class Monster{
+class Monster{
     // Think of how to write injure
     public hp:number;
+    public maxHp:number;
     constructor(){
-            this.hp = 1000;
+        this.maxHp = 200
+        this.hp = 200
     }
+
+    checkMonsterInjure(hp:number){
+        if (hp < (this.maxHp/2) && hp > 0){
+          return true
+        } else {
+            return false;
+        }
+    }
+
 
 }
 
 // const amazon = new Amazon(30, 40 ,false, 0);
 const monster = new Monster();
 
-// const paladin = new Amazon()
-const paladin = new Paladin();
+const amazon = new Amazon("Amazon",new BowAndArrow(30).damage,new ThrowingSpear(40).damage)
+const paladin = new Amazon("Paladin",new Swords(50).damage,new Spells(25).damage)
+const barbarian = new Barbarian("Barbarian",new Swords(55).damage,new ThrowingSpear(30).damage)
+
+
+amazon.attack(monster);
+amazon.switchAttack()
+amazon.attack(monster);
 
 paladin.attack(monster);
 paladin.switchAttack()
 paladin.attack(monster);
-paladin.attack(monster);
-paladin.attack(monster);
-paladin.switchAttack()
-paladin.attack(monster);
-paladin.attack(monster);
-paladin.attack(monster);
+
+barbarian.attack(monster);
+barbarian.switchAttack()
+barbarian.attack(monster);
+
+
 
 
 
